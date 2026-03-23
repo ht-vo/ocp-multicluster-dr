@@ -1,0 +1,12 @@
+---
+apiVersion: noobaa.io/v1alpha1
+kind: BucketClass
+metadata:
+  name: ${SRC_CLUSTER}
+  namespace: openshift-storage
+spec:
+  namespacePolicy:
+    type: Single
+    single:
+      resource: ${DEST_CLUSTER}
+...

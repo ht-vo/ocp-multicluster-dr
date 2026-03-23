@@ -1,0 +1,12 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: ${SRC_CLUSTER}-ro
+  namespace: ${BACKUP_NAMESPACE}
+spec:
+  storageClassName: openshift-storage.noobaa.io
+  bucketName: ${SRC_CLUSTER}-ro
+  additionalConfig:
+    bucketclass: ${SRC_CLUSTER}
+...

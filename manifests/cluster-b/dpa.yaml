@@ -1,0 +1,41 @@
+---
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: ${DEST_CLUSTER}-dr
+  namespace: openshift-adp
+spec:
+  configuration:
+    nodeAgent:
+      enable: true
+      uploaderType: kopia
+    velero:
+      defaultPlugins:
+        - openshift
+        - aws
+        - csi
+  backupLocations:
+    - velero:
+        default: true
+        provider: aws
+        config:
+          profile: default
+          region: us-east-1
+          s3Url: https://s3.openshift-storage.svc.cluster.local:443
+          s3ForcePathStyle: true
+          insecureSkipTLSVerify: true
+        credential:
+          name: s3-credentials
+          key: cloud
+        objectStorage:
+          bucket: ${DEST_S3_BUCKET_NAME}
+          prefix: velero
+  snapshotLocations:
+    - velero:
+        config:
+          profile: default
+          region: us-east-1
+        credential:
+          name: s3-credentials
+          key: cloud
+...

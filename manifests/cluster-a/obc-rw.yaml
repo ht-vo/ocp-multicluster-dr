@@ -1,0 +1,18 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: ${SRC_CLUSTER}-rw
+  namespace: ${BACKUP_NAMESPACE}
+spec:
+  storageClassName: openshift-storage.noobaa.io
+  bucketName: ${SRC_CLUSTER}-rw
+  additionalConfig:
+    bucketclass: noobaa-default-bucket-class
+    replicationPolicy: |
+      {
+        "rules": [
+          {"rule_id":"rule-1","sync_deletions":"true","destination_bucket":"${SRC_CLUSTER}-ro"}
+        ]
+      }
+...

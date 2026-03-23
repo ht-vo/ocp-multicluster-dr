@@ -1,0 +1,15 @@
+---
+apiVersion: noobaa.io/v1alpha1
+kind: NamespaceStore
+metadata:
+  name: ${DEST_CLUSTER}
+  namespace: openshift-storage
+spec:
+  s3Compatible:
+    endpoint: ${DEST_S3_HOST}
+    secret:
+      name: ${DEST_CLUSTER}-s3-secret
+      namespace: openshift-storage
+    targetBucket: ${DEST_S3_BUCKET_NAME}
+  type: s3-compatible
+...
