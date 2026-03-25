@@ -121,9 +121,23 @@ This resource configures OADP to use the local read-write S3 bucket for storing 
 envsubst < manifests/cluster-a/dpa.yaml | oc create -f -
 ```
 
+13. Add label to `VolumeSnapshotClasses`
+
+This labels and patches the `VolumeSnapshotClasses` required for the `datamover` to provision volumes on cluster B.
+
+```shell
+VSCS=$(oc get volumesnapshotclasses -o json | jq -r '.items[] | select(.driver | contains("ceph")) | .metadata.name')
+
+for vsc in ${VSCS}
+do
+    oc label volumesnapshotclass ${vsc} velero.io/csi-volumesnapshot-class=true
+    oc patch volumesnapshotclass ${vsc} --type=merge -p '{"deletionPolicy":"Retain"}'
+done
+```
+
 ### **Phase 4:** OADP configuration on cluster B
 
-13. Create the OADP storage `secret`
+14. Create the OADP storage `secret`
 
 This creates the required secret to enable authentication between Velero and the local S3 bucket.
 
@@ -135,12 +149,26 @@ aws_secret_access_key=${DEST_S3_BUCKET_SECRET_KEY}
 EOF
 ```
 
-14. Deploy the `DataProtectionApplication`
+15. Deploy the `DataProtectionApplication`
 
 This resource configures OADP on cluster B to connect to the local S3 bucket, allowing it to access the backups replicated from cluster A for data recovery.
 
 ```shell
 envsubst < manifests/cluster-b/dpa.yaml | oc create -f -
+```
+
+16. Add label to `VolumeSnapshotClasses`
+
+This labels and patches the `VolumeSnapshotClasses` required for the `datamover` to provision volumes on cluster B.
+
+```shell
+VSCS=$(oc get volumesnapshotclasses -o json | jq -r '.items[] | select(.driver | contains("ceph")) | .metadata.name')
+
+for vsc in ${VSCS}
+do
+    oc label volumesnapshotclass ${vsc} velero.io/csi-volumesnapshot-class=true
+    oc patch volumesnapshotclass ${vsc} --type=merge -p '{"deletionPolicy":"Retain"}'
+done
 ```
 
 *Work in progress...*
