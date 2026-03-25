@@ -1,0 +1,12 @@
+---
+apiVersion: velero.io/v1
+kind: Restore
+metadata:
+  name: ${BACKUP_NAME}-restore
+  namespace: openshift-migration
+spec:
+  backupName: ${BACKUP_NAME}-backup
+  includedResources:
+    - persistentvolumeclaims
+  restorePVs: true
+...

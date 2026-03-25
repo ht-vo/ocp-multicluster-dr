@@ -171,4 +171,47 @@ do
 done
 ```
 
+### **Phase 5:** Backup application data on cluster A
+
+17. Create the `Backup` resource
+
+This resource triggers a CSI snapshot and initiates the Data Mover to transfer persistent volume data to the S3 bucket. 
+
+**Note:** Customize the `includedNamespaces` and `includedResources` in the manifest as needed.
+
+```shell
+BSL_NAME="example-dr-1"
+VSL_NAME="example-dr-1"
+
+BACKUP_NAME="20260325-app-data"
+
+envsubst < manifests/cluster-a/bkp.yaml | oc create -f -
+```
+
+18. Monitor the `dataupload` status
+
+This command shows the progress of the data blocks moving to S3.
+
+```shell
+watch oc get dataupload -l velero.io/backup-name=${BACKUP_NAME}-backup
+```
+
+### **Phase 6:** Restore application data on cluster B
+
+19. Create the `Restore` resource
+
+This resource pulls the data from S3 bucket and provisions the `PersistentVolumeClaims` with its data on cluster B.
+
+```shell
+envsubst < manifests/cluster-b/rst.yaml | oc create -f -
+```
+
+20. Monitor `datadownload` status
+
+This command shows the progress of the data being downloaded from S3 bucket into the local volumes.
+
+```shell
+watch oc get datadownload -l velero.io/restore-name=${BACKUP_NAME}-restore
+```
+
 *Work in progress...*

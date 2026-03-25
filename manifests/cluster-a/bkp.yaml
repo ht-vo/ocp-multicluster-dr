@@ -1,0 +1,23 @@
+---
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: ${BACKUP_NAME}-backup
+  namespace: openshift-migration
+spec:
+  datamover: velero
+  snapshotMoveData: true
+  ttl: 168h0m0s
+  storageLocation: ${BSL_NAME}
+  volumeSnapshotLocations:
+    - ${VSL_NAME}
+  includedNamespaces:
+    - project-a
+    - project-b
+    - project-c
+  includedResources:
+    - persistentvolumeclaims
+  excludedResources:
+    - events
+    - events.k8s.io
+...
