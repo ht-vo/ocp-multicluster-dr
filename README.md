@@ -4,7 +4,7 @@ The goal of the project is to demonstrate how to replicate S3 buckets between tw
 
 ## Requirements
 
-* 2 Red Hat OpenShift Container Platform (RHOCP) clusters
+* 2x Red Hat OpenShift Container Platform (RHOCP) clusters
 * Red Hat OpenShift Data Foundation installed on both clusters
 * Red Hat OpenShift APIs for Data Protection (OADP) operator on both clusters
 
@@ -12,9 +12,9 @@ The goal of the project is to demonstrate how to replicate S3 buckets between tw
 
 This configuration was validated in both lab and production environments.
 
-* **OpenShift Container Platform:** 4.18.22
-* **OpenShift Data Foundation:** 4.18.10-rhodf
-* **OADP Operator:** 1.4.5
+* **OpenShift Container Platform:** `4.18.22`
+* **OpenShift Data Foundation:** `4.18.10-rhodf`
+* **OADP Operator:** `1.4.5`
 
 ## Diagram
 
