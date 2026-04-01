@@ -24,6 +24,10 @@ This configuration was validated in both lab and production environments.
 
 For detailed deployment steps, please refer to the **[usage guide](USAGE.md)**.
 
+## Development
+
+Interested in the roadmap? Check the **[to-do list](TODO.md)**.
+
 ## License
 
 This project is [MIT](LICENSE) licensed.
