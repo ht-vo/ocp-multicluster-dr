@@ -12,7 +12,7 @@ spec:
     replicationPolicy: |
       {
         "rules": [
-          {"rule_id":"rule-1","sync_deletions":"true","destination_bucket":"${SRC_CLUSTER}-ro"}
+          {"rule_id":"rule-1","sync_deletions":true,"destination_bucket":"${SRC_CLUSTER}-ro"}
         ]
       }
 ...

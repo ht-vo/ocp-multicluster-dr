@@ -22,8 +22,8 @@ spec:
           profile: default
           region: us-east-1
           s3Url: https://s3.openshift-storage.svc.cluster.local:443
-          s3ForcePathStyle: true
-          insecureSkipTLSVerify: true
+          s3ForcePathStyle: "true"
+          insecureSkipTLSVerify: "true"
         credential:
           name: s3-credentials
           key: cloud
@@ -32,6 +32,7 @@ spec:
           prefix: velero
   snapshotLocations:
     - velero:
+        provider: aws
         config:
           profile: default
           region: us-east-1
